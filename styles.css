@@ -2,7 +2,29 @@ body {
     display: flex;
 }
 
-.AllPlayerContainer {
+
+
+#AllContainer {
+    display: flex;
+}
+
+#DamageInfo {
+    border-radius: 25px;
+    width: 250px;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    text-align: center;
+    background: #F8F8F8;
+}
+
+#AllPlayerContainer {
+    margin-left: 25px;
     display: flex;
     width: auto;
     height: auto;
@@ -31,6 +53,8 @@ body {
     text-align: center;
 }
 
+/*  */
+
 .HandContainer {
     width: 250px;
     display: flex;
@@ -57,13 +81,14 @@ body {
     border-radius: 25px;
 }
 
-
 .HandDead {
     width: 125px;
     height: 125px;
     background: #e5e5e5;
     border-radius: 25px;
 }
+
+/*  */
 
 .DamageHand {
     width: 115px;
@@ -97,6 +122,8 @@ body {
     text-align: center;
 }
 
+/*  */
+
 .HandSwapperContainer {
     width: 250px;
     display: flex;
@@ -116,6 +143,8 @@ body {
     text-align: center;
 }
 
+/*  */
+
 .ShiftConfirm {
     margin-top: 5px;
     margin-left: 25px;
@@ -131,6 +160,8 @@ body {
     color: #7b7b7b;
     text-align: center;
 }
+
+/*  */
 
 .PowerupTokens {
     margin-top: 30px;
@@ -151,6 +182,103 @@ body {
 
     margin: 10px;
     font-size: 30px;
-    color: #818181;
+    color: #737c73;
+    text-align: center;
+}
+
+/*  */
+
+#PowerupShop {
+    border-radius: 25px;
+    margin-left: 50px;
+    width: 520px;
+    height: auto;
+    background: #fbfbfb;
+}
+
+#PowerupHeader {
+    margin: 20px;
+    width: 480px;
+    height: 70px;
+    font-size: 50px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.BuyablePowerup {
+    color: #277d3e;
+    background: #edfff2;
+}
+
+.LockedPowerup {
+    color: #7d2727;
+    background: #ffeded;
+}
+
+.BuyablePowerupRow {
+    margin: 20px;
+    border-radius: 25px;
+    width: auto;
+    height: auto;
+    color: #277d3e;
+    background: #edfff2;
+}
+
+.LockedPowerupRow {
+    margin: 20px;
+    border-radius: 25px;
+    width: auto;
+    height: auto;
+    color: #736363;
+    background: #ffeded;
+}
+
+.PowerupMain {
+    display: flex;
+}
+
+.PowerupName {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    margin: 0px;
+    width: 300px;
+    height: 30px;
+    font-size: 30px;
+    text-align: left;
+}
+
+.PowerupPrice {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 25px;
+    margin: 0px;
+    width: 130px;
+    height: 30px;
+    font-size: 30px;
+    text-align: right;
+}
+
+.PowerupDescription {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 440px;
+    height: auto;
+    font-size: 15px;
+    text-align: center;
+}
+
+.PowerupInstruction {
+    padding-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 440px;
+    height: auto;
+    font-size: 15px;
+    font-style: italic;
     text-align: center;
 }

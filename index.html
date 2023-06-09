@@ -9,103 +9,176 @@
 </head>
 <body>
     
-    
-    <div class="AllPlayerContainer">
-        <div class="Player" id="Player1">
-            <p class="PlayerName">Player1</p>
+    <div id="AllContainer">
+        <div id="Battlefield">
+            <div id="DamageInfo">Current Damage: 0</div>
+            <div id="AllPlayerContainer">
+                <div class="Player" id="Player1">
+                    <p class="PlayerName">Player1</p>
 
-            <div class="HandContainer">
-                <div onClick="Interact('P1LeftHealth')" class="Hand" id="P1LeftHand">
-                    <p class="HandHealth" id="P1LeftHealth">1</p>
-                </div>
+                    <div class="HandContainer">
+                        <div onClick="Interact('P1LeftHealth')" class="Hand" id="P1LeftHand">
+                            <p class="HandHealth" id="P1LeftHealth">1</p>
+                        </div>
 
-                <div onClick="Interact('P1RightHealth')" class="Hand" id="P1RightHand">
-                    <p class="HandHealth" id="P1RightHealth">1</p>
-                </div>
-            </div>
-
-            <div id="P1SwapperContainer">
-                <div class="HandSwapperContainer">
-                    <div onClick="HandShift('P1LeftHealth','P1RightHealth')" class="HandSwapper" id="P1LeftSwapper">
-                        <p class="HandSwappertxt">+</p>
+                        <div onClick="Interact('P1RightHealth')" class="Hand" id="P1RightHand">
+                            <p class="HandHealth" id="P1RightHealth">1</p>
+                        </div>
                     </div>
-                    <div onClick="HandShift('P1RightHealth','P1LeftHealth')" class="HandSwapper" id="P1RightSwapper">
-                        <p class="HandSwappertxt">+</p>
-                    </div>
-                </div>
-                <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P1ShiftConfirm">
-                    <p class="ShiftConfirmtxt">Finish Turn</p>
-                </div>
-            </div>
 
-            <p class="PowerupTokens" id="P1Power">0</p>
-            <p class="Shield"></p>
+                    <div id="P1SwapperContainer">
+                        <div class="HandSwapperContainer">
+                            <div onClick="HandShift('P1LeftHealth','P1RightHealth')" class="HandSwapper" id="P1LeftSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                            <div onClick="HandShift('P1RightHealth','P1LeftHealth')" class="HandSwapper" id="P1RightSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                        </div>
+                        <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P1ShiftConfirm">
+                            <p class="ShiftConfirmtxt">Finish Turn</p>
+                        </div>
+                    </div>
+
+                    <p class="PowerupTokens" id="P1Power">0</p>
+                    <p class="Shield" id="P1Shield"></p>
+                </div>
+
+                <div class="Player" id="Player2">
+                    <p class="PlayerName">Player2</p>
+
+                    <div class="HandContainer">
+                        <div onClick="Interact('P2LeftHealth')" class="Hand" id="P2LeftHand">
+                            <p class="HandHealth" id="P2LeftHealth">1</p>
+                        </div>
+
+                        <div onClick="Interact('P2RightHealth')" class="Hand" id="P2RightHand">
+                            <p class="HandHealth" id="P2RightHealth">1</p>
+                        </div>
+                    </div>
+
+                    <div id="P2SwapperContainer">
+                        <div class="HandSwapperContainer">
+                            <div onClick="HandShift('P2LeftHealth','P2RightHealth')" class="HandSwapper" id="P2LeftSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                            <div onClick="HandShift('P2RightHealth','P2LeftHealth')" class="HandSwapper" id="P2RightSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                        </div>
+                        <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P2ShiftConfirm">
+                            <p class="ShiftConfirmtxt">Finish Turn</p>
+                        </div>
+                    </div>
+
+                    <p class="PowerupTokens" id="P2Power">0</p>
+                    <p class="Shield" id="P2Shield"></p>
+                </div>
+
+                <div class="Player" id="Player3">
+                    <p class="PlayerName">Player3</p>
+
+                    <div class="HandContainer">
+                        <div onClick="Interact('P3LeftHealth')" class="Hand" id="P3LeftHand">
+                            <p class="HandHealth" id="P3LeftHealth">1</p>
+                        </div>
+
+                        <div onClick="Interact('P3RightHealth')" class="Hand" id="P3RightHand">
+                            <p class="HandHealth" id="P3RightHealth">1</p>
+                        </div>
+                    </div>
+
+                    <div id="P3SwapperContainer">
+                        <div class="HandSwapperContainer">
+                            <div onClick="HandShift('P3LeftHealth','P3RightHealth')" class="HandSwapper" id="P3LeftSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                            <div onClick="HandShift('P3RightHealth','P3LeftHealth')" class="HandSwapper" id="P3RightSwapper">
+                                <p class="HandSwappertxt">+</p>
+                            </div>
+                        </div>
+                        <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P3ShiftConfirm">
+                            <p class="ShiftConfirmtxt">Finish Turn</p>
+                        </div>
+                    </div>
+
+                    <p class="PowerupTokens" id="P3Power">0</p>
+                    <p class="Shield" id="P3Shield"></p>
+                </div>
+
+            </div>
         </div>
 
-        <div class="Player" id="Player2">
-            <p class="PlayerName">Player2</p>
+        <div id="PowerupShop">
+            <div id="PowerupHeader">Powerup Shop</div>
 
-            <div class="HandContainer">
-                <div onClick="Interact('P2LeftHealth')" class="Hand" id="P2LeftHand">
-                    <p class="HandHealth" id="P2LeftHealth">1</p>
+            <div onClick="ShieldPowerup()" class="LockedPowerupRow" id="ShieldPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Paper Shield</div>
+                    <div class="PowerupPrice">Cost: 1</div>
                 </div>
-
-                <div onClick="Interact('P2RightHealth')" class="Hand" id="P2RightHand">
-                    <p class="HandHealth" id="P2RightHealth">1</p>
-                </div>
+                <p class="PowerupDescription">Origami finally has a use. Let's just hope no one has scissors...</p>
+                <p class="PowerupInstruction">(Activates a shield that lasts one cycle / 2 turns)</p>
             </div>
 
-            <div id="P2SwapperContainer">
-                <div class="HandSwapperContainer">
-                    <div onClick="HandShift('P2LeftHealth','P2RightHealth')" class="HandSwapper" id="P2LeftSwapper">
-                        <p class="HandSwappertxt">+</p>
-                    </div>
-                    <div onClick="HandShift('P2RightHealth','P2LeftHealth')" class="HandSwapper" id="P2RightSwapper">
-                        <p class="HandSwappertxt">+</p>
-                    </div>
+            <div onClick="LightningPowerup()" class="LockedPowerupRow" id="LightningPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Lightning Rod</div>
+                    <div class="PowerupPrice">Cost: 3</div>
                 </div>
-                <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P2ShiftConfirm">
-                    <p class="ShiftConfirmtxt">Finish Turn</p>
-                </div>
+                <p class="PowerupDescription">You watch a tutorial on electrical work... after YouTube removed dislikes</p>
+                <p class="PowerupInstruction">(Adds 2 to both of your hands)</p>
             </div>
 
-            <p class="PowerupTokens" id="P2Power">0</p>
-            <p class="Shield"></p>
+            <div onClick="PoisonPowerup()" class="LockedPowerupRow" id="PoisonPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Poison Cloud</div>
+                    <div class="PowerupPrice">Cost: 5</div>
+                </div>
+                <p class="PowerupDescription">Unleash the power of Chipotle™</p>
+                <p class="PowerupInstruction">(Adds 1 to <strong>all</strong> players' hands)</p>
+            </div>
+
+            <div onClick="HealPowerup()" class="LockedPowerupRow" id="HealPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Motivational Video</div>
+                    <div class="PowerupPrice">Cost: 7</div>
+                </div>
+                <p class="PowerupDescription">We're not just telling stories, we're changing lives</p>
+                <p class="PowerupInstruction">(Subtracts 1 from both of your hands)</p>
+            </div>
+
+            <div onClick="StrengthPowerup()" class="LockedPowerupRow" id="StrengthPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Red Bull</div>
+                    <div class="PowerupPrice">Cost: 12</div>
+                </div>
+                <p class="PowerupDescription">Red Bull gives you wings</p>
+                <p class="PowerupInstruction">(Doubles Damage)</p>
+                <p class="PowerupInstruction">Warning: This Powerup is very volatile, and changing hands during this will cancel its effect</p>
+            </div>
+
+            <div onClick="NukePowerup()" class="LockedPowerupRow" id="NukePowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Tactical Nuke</div>
+                    <div class="PowerupPrice">Cost: 15</div>
+                </div>
+                <p class="PowerupDescription">Legalize Nuclear Bombs</p>
+                <p class="PowerupInstruction">(Sets Damage to 999)</p>
+                <p class="PowerupInstruction">Warning: This Powerup is very volatile, and changing hands during this will cancel its effect</p>
+            </div>
+
+            <div onClick="EdgePowerup()" class="BuyablePowerupRow" id="EdgePowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Life on the Edge</div>
+                    <div class="PowerupPrice">Cost: 0</div>
+                </div>
+                <p class="PowerupDescription">Would you risk total destruction just for a small payoff... I know I would</p>
+                <p class="PowerupInstruction">(Sets both hands to 5 in exchange for 1 powerup token)</p>
+            </div>
+            
         </div>
-
-        <div class="Player" id="Player3">
-            <p class="PlayerName">Player3</p>
-
-            <div class="HandContainer">
-                <div onClick="Interact('P3LeftHealth')" class="Hand" id="P3LeftHand">
-                    <p class="HandHealth" id="P3LeftHealth">1</p>
-                </div>
-
-                <div onClick="Interact('P3RightHealth')" class="Hand" id="P3RightHand">
-                    <p class="HandHealth" id="P3RightHealth">1</p>
-                </div>
-            </div>
-
-            <div id="P3SwapperContainer">
-                <div class="HandSwapperContainer">
-                    <div onClick="HandShift('P3LeftHealth','P3RightHealth')" class="HandSwapper" id="P3LeftSwapper">
-                        <p class="HandSwappertxt">+</p>
-                    </div>
-                    <div onClick="HandShift('P3RightHealth','P3LeftHealth')" class="HandSwapper" id="P3RightSwapper">
-                        <p class="HandSwappertxt">+</p>
-                    </div>
-                </div>
-                <div OnClick="ConfirmShift()" class="ShiftConfirm" id="P3ShiftConfirm">
-                    <p class="ShiftConfirmtxt">Finish Turn</p>
-                </div>
-            </div>
-
-            <p class="PowerupTokens" id="P3Power">0</p>
-            <p class="Shield"></p>
-        </div>
-
     </div>
-   
     
     <script src="script.js"></script>
 </body>
