@@ -106,8 +106,15 @@ function SetDead(HandHealthID) {
     document.getElementById(GetHandParent(HandHealthID)).className = "HandDead";
 }
 
-function ShowDamage() {
+function UpdateInfo() {
     document.getElementById("DamageInfo").innerHTML = "Current Damage: "+ Damage;
+
+    if (!Shifting) {
+        document.getElementById("ShiftingInfo").innerHTML = "Not Shifting";
+    } else {
+        document.getElementById("ShiftingInfo").innerHTML = "Shifting";
+    }
+
 }
 
 function UpdateShop() {
@@ -118,38 +125,38 @@ function UpdateShop() {
     } else if (ActivePlayer == "Player3") {
         CurrentPower = P3Power;
     }
-
-    if (CurrentPower >= 1) {
+    
+    if (CurrentPower >= 1 && !Shifting) {
         document.getElementById("ShieldPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("ShieldPowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 3) {
+    if (CurrentPower >= 3 && !Shifting) {
         document.getElementById("LightningPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("LightningPowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 5) {
+    if (CurrentPower >= 5 && !Shifting) {
         document.getElementById("PoisonPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("PoisonPowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 7) {
+    if (CurrentPower >= 7 && !Shifting) {
         document.getElementById("HealPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("HealPowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 12) {
+    if (CurrentPower >= 12 && !Shifting) {
         document.getElementById("StrengthPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("StrengthPowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 15) {
+    if (CurrentPower >= 15 && !Shifting) {
         document.getElementById("NukePowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("NukePowerup").className = "LockedPowerupRow";
     }
-    if (CurrentPower >= 0) {
+    if (CurrentPower >= 0 && !Shifting) {
         document.getElementById("EdgePowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("EdgePowerup").className = "LockedPowerupRow";
@@ -336,7 +343,7 @@ function Interact(HandID) {
 
     UpdateDead();
     UpdatePower();
-    ShowDamage();
+    UpdateInfo();
     UpdateShop();
     UpdateShield();
 
@@ -363,7 +370,7 @@ function HandShift(takerID, giverID) {
     UpdateCurrentHands();
     SetActive(ActivePlayer);
     UpdateDead();
-    ShowDamage();
+    UpdateInfo();
     UpdateShop()
 }
 
@@ -372,7 +379,7 @@ function ConfirmShift() {
     CycleActive();
     UpdateDead();
     UpdatePower();
-    ShowDamage();
+    UpdateInfo();
     UpdateShop();
     UpdateShield();
 
@@ -381,7 +388,7 @@ function ConfirmShift() {
 // Powerups
 
 function ShieldPowerup() {
-    if (CurrentPower >= 1) {
+    if (CurrentPower >= 1 && !Shifting) {
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 1;
         } else if (ActivePlayer == "Player2") {
@@ -395,14 +402,14 @@ function ShieldPowerup() {
         CycleActive();
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
 }
 
 function LightningPowerup() {
-    if (CurrentPower >= 3) {
+    if (CurrentPower >= 3 && !Shifting) {
 
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 3;
@@ -427,14 +434,14 @@ function LightningPowerup() {
         CycleActive();
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
 }
 
 function PoisonPowerup() {
-    if (CurrentPower >= 5) {
+    if (CurrentPower >= 5 && !Shifting) {
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 5;
         } else if (ActivePlayer == "Player2") {
@@ -456,14 +463,14 @@ function PoisonPowerup() {
         CycleActive();
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
 }
 
 function HealPowerup() {
-    if (CurrentPower >= 7) {
+    if (CurrentPower >= 7 && !Shifting) {
 
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 7;
@@ -488,7 +495,7 @@ function HealPowerup() {
         CycleActive();
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
@@ -511,14 +518,14 @@ function StrengthPowerup() {
 
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
 }
 
 function NukePowerup() {
-    if (CurrentPower >= 15) {
+    if (CurrentPower >= 15 && !Shifting) {
 
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 15;
@@ -534,33 +541,34 @@ function NukePowerup() {
 
         UpdateDead();
         UpdatePower();
-        ShowDamage();
+        UpdateInfo();
         UpdateShop();
         UpdateShield();
     }
 }
 
 function EdgePowerup() {
-
-    if (ActivePlayer == "Player1") {
-        document.getElementById("P1Power").innerHTML = P1Power + 1;
-        document.getElementById("P1LeftHealth").innerHTML = 5;
-        document.getElementById("P1RightHealth").innerHTML = 5;
-    } else if (ActivePlayer == "Player2") {
-        document.getElementById("P2Power").innerHTML = P2Power + 1;
-        document.getElementById("P2LeftHealth").innerHTML = 5;
-        document.getElementById("P2RightHealth").innerHTML = 5;
-    } else if (ActivePlayer == "Player3") {
-        document.getElementById("P3Power").innerHTML = P3Power + 1;
-        document.getElementById("P3LeftHealth").innerHTML = 5;
-        document.getElementById("P3RightHealth").innerHTML = 5;
+    if (!Shifting) {
+        if (ActivePlayer == "Player1") {
+            document.getElementById("P1Power").innerHTML = P1Power + 1;
+            document.getElementById("P1LeftHealth").innerHTML = 5;
+            document.getElementById("P1RightHealth").innerHTML = 5;
+        } else if (ActivePlayer == "Player2") {
+            document.getElementById("P2Power").innerHTML = P2Power + 1;
+            document.getElementById("P2LeftHealth").innerHTML = 5;
+            document.getElementById("P2RightHealth").innerHTML = 5;
+        } else if (ActivePlayer == "Player3") {
+            document.getElementById("P3Power").innerHTML = P3Power + 1;
+            document.getElementById("P3LeftHealth").innerHTML = 5;
+            document.getElementById("P3RightHealth").innerHTML = 5;
+        }
+    
+        CycleActive();
+        UpdateDead();
+        UpdatePower();
+        UpdateInfo();
+        UpdateShop();
+        UpdateShield();
     }
-
-    CycleActive();
-    UpdateDead();
-    UpdatePower();
-    ShowDamage();
-    UpdateShop();
-    UpdateShield();
 
 }
