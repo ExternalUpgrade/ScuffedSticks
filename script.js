@@ -306,6 +306,7 @@ function CycleActive() {
     }
 
     SetActive(ActivePlayer);
+    UpdateShield();
 }
 
 
@@ -403,7 +404,6 @@ function Interact(HandID) {
     UpdatePower();
     UpdateInfo();
     UpdateShop();
-    UpdateShield();
 
 
 }
