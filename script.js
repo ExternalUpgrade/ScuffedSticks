@@ -3,6 +3,7 @@ var DamageHand = null;
 var ActivePlayer = "Player1";
 
 var ProtectedPlayer = null;
+var DoubleProtectedPlayer = null;
 
 var P1Power = 0;
 var P2Power = 0;
@@ -127,14 +128,24 @@ function UpdateShop() {
     }
     
     if (CurrentPower >= 1 && !Shifting) {
-        document.getElementById("ShieldPowerup").className = "BuyablePowerupRow";
+        document.getElementById("OneCycleShieldPowerup").className = "BuyablePowerupRow";
     } else {
-        document.getElementById("ShieldPowerup").className = "LockedPowerupRow";
+        document.getElementById("OneCycleShieldPowerup").className = "LockedPowerupRow";
+    }
+    if (CurrentPower >= 2 && !Shifting) {
+        document.getElementById("TwoCycleShieldPowerup").className = "BuyablePowerupRow";
+    } else {
+        document.getElementById("TwoCycleShieldPowerup").className = "LockedPowerupRow";
     }
     if (CurrentPower >= 3 && !Shifting) {
         document.getElementById("LightningPowerup").className = "BuyablePowerupRow";
     } else {
         document.getElementById("LightningPowerup").className = "LockedPowerupRow";
+    }
+    if (CurrentPower >= 4 && !Shifting) {
+        document.getElementById("SkipPowerup").className = "BuyablePowerupRow";
+    } else {
+        document.getElementById("SkipPowerup").className = "LockedPowerupRow";
     }
     if (CurrentPower >= 5 && !Shifting) {
         document.getElementById("PoisonPowerup").className = "BuyablePowerupRow";
@@ -166,6 +177,28 @@ function UpdateShop() {
 //-----------------------------------
 
 function UpdateDead() {
+
+    if (parseInt(P1LeftHealth.innerHTML) > 5) {
+        P1LeftHealth.innerHTML = "0";
+    } 
+    if (parseInt(P1RightHealth.innerHTML) > 5) {
+        P1RightHealth.innerHTML = "0";
+    } 
+
+    if (parseInt(P2LeftHealth.innerHTML) > 5) {
+        P2LeftHealth.innerHTML = "0";
+    } 
+    if (parseInt(P2RightHealth.innerHTML) > 5) {
+        P2RightHealth.innerHTML = "0";
+    } 
+
+    if (parseInt(P3LeftHealth.innerHTML) > 5) {
+        P3LeftHealth.innerHTML = "0";
+    } 
+    if (parseInt(P3RightHealth.innerHTML) > 5) {
+        P3RightHealth.innerHTML = "0";
+    } 
+
     
     if (P1LeftHealth.innerHTML == "0") {
         SetDead("P1LeftHealth");
@@ -188,6 +221,8 @@ function UpdateDead() {
         SetDead("P3RightHealth");
     } 
 
+
+
 }
 
 function UpdatePower() {
@@ -197,27 +232,50 @@ function UpdatePower() {
 }
 
 function UpdateShield() {
-    if (ActivePlayer == ProtectedPlayer) {
+    if ((ActivePlayer == ProtectedPlayer) && (ActivePlayer == DoubleProtectedPlayer)) {
+        DoubleProtectedPlayer = null;
+    } else if ((ActivePlayer == ProtectedPlayer) && (ActivePlayer != DoubleProtectedPlayer)) {
         ProtectedPlayer = null;
     }
+    
 
-    if (ProtectedPlayer == "Player1") {
-        document.getElementById("P1Shield").innerHTML = "Shielded";
-        document.getElementById("P2Shield").innerHTML = "";
-        document.getElementById("P3Shield").innerHTML = "";
-    } else if (ProtectedPlayer == "Player2") {
-        document.getElementById("P1Shield").innerHTML = "";
-        document.getElementById("P2Shield").innerHTML = "Shielded";
-        document.getElementById("P3Shield").innerHTML = "";
-    } else if (ProtectedPlayer == "Player3") {
-        document.getElementById("P1Shield").innerHTML = "";
-        document.getElementById("P2Shield").innerHTML = "";
-        document.getElementById("P3Shield").innerHTML = "Shielded";
+    if (DoubleProtectedPlayer != null) {
+        if (DoubleProtectedPlayer == "Player1") {
+            document.getElementById("P1Shield").innerHTML = "2x Shielded";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "";
+        } else if (DoubleProtectedPlayer == "Player2") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "2x Shielded";
+            document.getElementById("P3Shield").innerHTML = "";
+        } else if (DoubleProtectedPlayer == "Player3") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "2x Shielded";
+        }
+    } else if (ProtectedPlayer != null) {
+        if (ProtectedPlayer == "Player1") {
+            document.getElementById("P1Shield").innerHTML = "Shielded";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "";
+        } else if (ProtectedPlayer == "Player2") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "Shielded";
+            document.getElementById("P3Shield").innerHTML = "";
+        } else if (ProtectedPlayer == "Player3") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "Shielded";
+        }
     } else {
         document.getElementById("P1Shield").innerHTML = "";
         document.getElementById("P2Shield").innerHTML = "";
         document.getElementById("P3Shield").innerHTML = "";
     }
+    
+
+    
+
 }
 
 
@@ -387,7 +445,7 @@ function ConfirmShift() {
 
 // Powerups
 
-function ShieldPowerup() {
+function OneCycleShieldPowerup() {
     if (CurrentPower >= 1 && !Shifting) {
         if (ActivePlayer == "Player1") {
             document.getElementById("P1Power").innerHTML = P1Power - 1;
@@ -400,6 +458,49 @@ function ShieldPowerup() {
         ProtectedPlayer = ActivePlayer;
         
         CycleActive();
+        UpdateDead();
+        UpdatePower();
+        UpdateInfo();
+        UpdateShop();
+        UpdateShield();
+    }
+}
+
+function TwoCycleShieldPowerup() {
+    if (CurrentPower >= 2 && !Shifting) {
+        if (ActivePlayer == "Player1") {
+            document.getElementById("P1Power").innerHTML = P1Power - 2;
+        } else if (ActivePlayer == "Player2") {
+            document.getElementById("P2Power").innerHTML = P2Power - 2;
+        } else if (ActivePlayer == "Player3") {
+            document.getElementById("P3Power").innerHTML = P3Power - 2;
+        }
+
+        ProtectedPlayer = ActivePlayer;
+        DoubleProtectedPlayer = ActivePlayer;
+        
+        CycleActive();
+        UpdateDead();
+        UpdatePower();
+        UpdateInfo();
+        UpdateShop();
+        UpdateShield();
+    }
+}
+
+function SkipPowerup() {
+    if (CurrentPower >= 4 && !Shifting) {
+        if (ActivePlayer == "Player1") {
+            document.getElementById("P1Power").innerHTML = P1Power - 4;
+        } else if (ActivePlayer == "Player2") {
+            document.getElementById("P2Power").innerHTML = P2Power - 4;
+        } else if (ActivePlayer == "Player3") {
+            document.getElementById("P3Power").innerHTML = P3Power - 4;
+        }
+    
+        CycleActive();
+        CycleActive();
+
         UpdateDead();
         UpdatePower();
         UpdateInfo();

@@ -115,13 +115,31 @@
         <div id="PowerupShop">
             <div id="PowerupHeader">Powerup Shop</div>
 
-            <div onClick="ShieldPowerup()" class="LockedPowerupRow" id="ShieldPowerup">
+            <div onClick="EdgePowerup()" class="BuyablePowerupRow" id="EdgePowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Life on the Edge</div>
+                    <div class="PowerupPrice">Cost: 0</div>
+                </div>
+                <p class="PowerupDescription">Would you risk total destruction just for a small payoff... I know I would</p>
+                <p class="PowerupInstruction">(Sets both hands to 5 in exchange for 1 powerup token)</p>
+            </div>
+
+            <div onClick="OneCycleShieldPowerup()" class="LockedPowerupRow" id="OneCycleShieldPowerup">
                 <div class="PowerupMain">
                     <div class="PowerupName">Paper Shield</div>
                     <div class="PowerupPrice">Cost: 1</div>
                 </div>
                 <p class="PowerupDescription">Origami finally has a use. Let's just hope no one has scissors...</p>
-                <p class="PowerupInstruction">(Activates a shield that lasts one cycle / 2 turns)</p>
+                <p class="PowerupInstruction">(Activates a shield that lasts 1 cycle)</p>
+            </div>
+
+            <div onClick="TwoCycleShieldPowerup()" class="LockedPowerupRow" id="TwoCycleShieldPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">WW3 Bunker</div>
+                    <div class="PowerupPrice">Cost: 2</div>
+                </div>
+                <p class="PowerupDescription">Protection against Putin</p>
+                <p class="PowerupInstruction">(Activates a shield that lasts 2 cycles)</p>
             </div>
 
             <div onClick="LightningPowerup()" class="LockedPowerupRow" id="LightningPowerup">
@@ -131,6 +149,15 @@
                 </div>
                 <p class="PowerupDescription">You watch a tutorial on electrical work... after YouTube removed dislikes</p>
                 <p class="PowerupInstruction">(Adds 2 to both of your hands)</p>
+            </div>
+
+            <div onClick="SkipPowerup()" class="LockedPowerupRow" id="SkipPowerup">
+                <div class="PowerupMain">
+                    <div class="PowerupName">Obama's Last Name</div>
+                    <div class="PowerupPrice">Cost: 4</div>
+                </div>
+                <p class="PowerupDescription">Use his Presidential Power to arrest your opponent</p>
+                <p class="PowerupInstruction">Skips next player's turn</p>
             </div>
 
             <div onClick="PoisonPowerup()" class="LockedPowerupRow" id="PoisonPowerup">
@@ -171,14 +198,7 @@
                 <p class="PowerupInstruction">Warning: This powerup is very volatile, and changing hands during this will cancel its effect</p>
             </div>
 
-            <div onClick="EdgePowerup()" class="BuyablePowerupRow" id="EdgePowerup">
-                <div class="PowerupMain">
-                    <div class="PowerupName">Life on the Edge</div>
-                    <div class="PowerupPrice">Cost: 0</div>
-                </div>
-                <p class="PowerupDescription">Would you risk total destruction just for a small payoff... I know I would</p>
-                <p class="PowerupInstruction">(Sets both hands to 5 in exchange for 1 powerup token)</p>
-            </div>
+            
             
         </div>
     </div>
