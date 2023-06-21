@@ -10,6 +10,12 @@ body {
 
 #InfoContainer {
     display: flex;
+    width: auto;
+}
+
+#GameInfoContainer {
+    margin-left: 25px;
+    margin-top: 50px;
 }
 
 #DamageInfo {
@@ -49,12 +55,49 @@ body {
     height: auto;
 }
 
+#InfoHeader {
+    border-radius: 25px;
+    width: auto;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin: 5px;
+    font-size: 30px;
+    text-align: center;
+    background: #F8F8F8;
+}
+
+.InfoRow {
+    display: flex;
+    width: auto;
+}
+
+.InfoCell {
+    border-radius: 25px;
+    width: 250px;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: auto;
+    font-size: 20px;
+    text-align: center;
+    background: #F8F8F8;
+}
+
+
+
 .Player {
     border-radius: 25px;
     width: 250px;
     height: 600px;
     margin: 5px;
     background: #F8F8F8;
+}
+
+.PlayerShell {
+    margin: auto;
 }
 
 .PlayerName {

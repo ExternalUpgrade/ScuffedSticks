@@ -1,5 +1,9 @@
 var Damage = 0;
 var DamageHand = null;
+
+var PlayerList = []
+var MaxPlayers = 3;
+var ActivePlayerNum = 0;
 var ActivePlayer = "Player1";
 
 var ProtectedPlayer = null;
@@ -8,6 +12,7 @@ var DoubleProtectedPlayer = null;
 var P1Power = 0;
 var P2Power = 0;
 var P3Power = 0;
+var P4Power = 0;
 var CurrentPower = 0;
 
 var LeftHealth = 1;
@@ -24,10 +29,90 @@ var P2RightHealth = document.getElementById("P2RightHealth")
 var P3LeftHealth = document.getElementById("P3LeftHealth")
 var P3RightHealth = document.getElementById("P3RightHealth")
 
+var P4LeftHealth = document.getElementById("P4LeftHealth")
+var P4RightHealth = document.getElementById("P4RightHealth")
 
 
+DefSetPlayers(3);
 SetActive(ActivePlayer);
 
+
+function DefSetPlayers(amount) {
+    var PossiblePlayers = ["Player1", "Player2", "Player3", "Player4"];
+
+    if ((amount <= PossiblePlayers.length) && (amount >= 2)) {
+        MaxPlayers = amount;
+        PlayerList = PossiblePlayers.slice(0, amount);
+    } else {
+        return "Can't set player amount to this number";
+    }
+    
+    SetPlayersVisuals();
+    ResetGame();
+
+    UpdateDead();
+    UpdatePower();
+    UpdateInfo();
+    UpdateShop();
+}
+
+function SetPlayers(amount) {
+    var PossiblePlayers = ["Player1", "Player2", "Player3", "Player4"];
+
+    if(confirm("This Will Reset the Game!!")==true) {
+
+        if ((amount <= PossiblePlayers.length) && (amount >= 2)) {
+            MaxPlayers = amount;
+            PlayerList = PossiblePlayers.slice(0, amount);
+        } else {
+            return "Can't set player amount to this number";
+        }
+        
+        SetPlayersVisuals();
+        ResetGame();
+        
+    }
+
+    UpdateDead();
+    UpdatePower();
+    UpdateInfo();
+    UpdateShop();
+}
+
+function ResetGame() {
+    
+    document.getElementById("P1LeftHealth").innerHTML = 1;
+    document.getElementById("P1RightHealth").innerHTML = 1;
+    
+    document.getElementById("P2LeftHealth").innerHTML = 1;
+    document.getElementById("P2RightHealth").innerHTML = 1;
+
+    document.getElementById("P3LeftHealth").innerHTML = 1;
+    document.getElementById("P3RightHealth").innerHTML = 1;
+
+    document.getElementById("P4LeftHealth").innerHTML = 1;
+    document.getElementById("P4RightHealth").innerHTML = 1;
+
+
+    document.getElementById("P1Power").innerHTML = 0;
+    document.getElementById("P2Power").innerHTML = 0;
+    document.getElementById("P3Power").innerHTML = 0;
+    document.getElementById("P4Power").innerHTML = 0;
+
+}
+
+
+function CycleActive() {
+    DamageHand = null;
+    Damage = 0;
+
+    ActivePlayerNum = (ActivePlayerNum + 1) % MaxPlayers;
+
+    ActivePlayer = PlayerList[ActivePlayerNum];
+
+    SetActive(ActivePlayer);
+    UpdateShield();
+}
 
 
 //The following is only for visuals
@@ -58,6 +143,15 @@ function SetVictim(PlayerName) {
         document.getElementById("P3RightHealth").className = "HandHealth";
 
         document.getElementById("P3SwapperContainer").style.display = 'none';
+
+    } else if (PlayerName=="Player4") {
+        document.getElementById("P4LeftHand").className = "HandVictim";
+        document.getElementById("P4LeftHealth").className = "HandHealth";
+
+        document.getElementById("P4RightHand").className = "HandVictim";
+        document.getElementById("P4RightHealth").className = "HandHealth";
+
+        document.getElementById("P4SwapperContainer").style.display = 'none';
     }
 }
 
@@ -71,10 +165,12 @@ function SetActive(PlayerName) {
         document.getElementById("P1RightHand").className = "HandActive";
         document.getElementById("P1RightHealth").className = "HandHealthActive";
 
-        SetVictim("Player2")
-        SetVictim("Player3")
-
         document.getElementById("P1SwapperContainer").style.display = '';
+
+
+        SetVictim("Player2");
+        SetVictim("Player3");
+        SetVictim("Player4");
 
     } else if (PlayerName=="Player2") {
         document.getElementById("P2LeftHand").className = "HandActive";
@@ -83,10 +179,12 @@ function SetActive(PlayerName) {
         document.getElementById("P2RightHand").className = "HandActive";
         document.getElementById("P2RightHealth").className = "HandHealthActive";
 
-        SetVictim("Player1")
-        SetVictim("Player3")
-
         document.getElementById("P2SwapperContainer").style.display = '';
+
+        SetVictim("Player1");
+        
+        SetVictim("Player3");
+        SetVictim("Player4");
 
     } else if (PlayerName=="Player3") {
         document.getElementById("P3LeftHand").className = "HandActive";
@@ -95,10 +193,26 @@ function SetActive(PlayerName) {
         document.getElementById("P3RightHand").className = "HandActive";
         document.getElementById("P3RightHealth").className = "HandHealthActive";
 
-        SetVictim("Player1")
-        SetVictim("Player2")
-
         document.getElementById("P3SwapperContainer").style.display = '';
+
+        SetVictim("Player1");
+        SetVictim("Player2");
+        
+        SetVictim("Player4");
+
+    } else if (PlayerName=="Player4") {
+        document.getElementById("P4LeftHand").className = "HandActive";
+        document.getElementById("P4LeftHealth").className = "HandHealthActive";
+
+        document.getElementById("P4RightHand").className = "HandActive";
+        document.getElementById("P4RightHealth").className = "HandHealthActive";
+
+        document.getElementById("P4SwapperContainer").style.display = '';
+
+        SetVictim("Player1");
+        SetVictim("Player2");
+        SetVictim("Player3");
+        
     }
 }
 
@@ -113,7 +227,7 @@ function UpdateInfo() {
     if (!Shifting) {
         document.getElementById("ShiftingInfo").innerHTML = "Not Shifting";
     } else {
-        document.getElementById("ShiftingInfo").innerHTML = "Shifting";
+        document.getElementById("ShiftingInfo").innerHTML = "<strong>Shifting<\strong>";
     }
 
 }
@@ -125,6 +239,8 @@ function UpdateShop() {
         CurrentPower = P2Power;
     } else if (ActivePlayer == "Player3") {
         CurrentPower = P3Power;
+    } else if (ActivePlayer == "Player4") {
+        CurrentPower = P4Power;
     }
     
     if (CurrentPower >= 1 && !Shifting) {
@@ -174,7 +290,6 @@ function UpdateShop() {
     }
 }
 
-//-----------------------------------
 
 function UpdateDead() {
 
@@ -199,6 +314,13 @@ function UpdateDead() {
         P3RightHealth.innerHTML = "0";
     } 
 
+    if (parseInt(P4LeftHealth.innerHTML) > 5) {
+        P4LeftHealth.innerHTML = "0";
+    } 
+    if (parseInt(P4RightHealth.innerHTML) > 5) {
+        P4RightHealth.innerHTML = "0";
+    } 
+
     
     if (P1LeftHealth.innerHTML == "0") {
         SetDead("P1LeftHealth");
@@ -221,14 +343,19 @@ function UpdateDead() {
         SetDead("P3RightHealth");
     } 
 
-
-
+    if (P4LeftHealth.innerHTML == "0") {
+        SetDead("P4LeftHealth");
+    } 
+    if (P4RightHealth.innerHTML == "0") {
+        SetDead("P4RightHealth");
+    } 
 }
 
 function UpdatePower() {
     P1Power = parseInt(document.getElementById("P1Power").innerHTML);
     P2Power = parseInt(document.getElementById("P2Power").innerHTML);
     P3Power = parseInt(document.getElementById("P3Power").innerHTML);
+    P4Power = parseInt(document.getElementById("P4Power").innerHTML);
 }
 
 function UpdateShield() {
@@ -244,70 +371,81 @@ function UpdateShield() {
             document.getElementById("P1Shield").innerHTML = "2x Shielded";
             document.getElementById("P2Shield").innerHTML = "";
             document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "";
         } else if (DoubleProtectedPlayer == "Player2") {
             document.getElementById("P1Shield").innerHTML = "";
             document.getElementById("P2Shield").innerHTML = "2x Shielded";
             document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "";
         } else if (DoubleProtectedPlayer == "Player3") {
             document.getElementById("P1Shield").innerHTML = "";
             document.getElementById("P2Shield").innerHTML = "";
             document.getElementById("P3Shield").innerHTML = "2x Shielded";
+            document.getElementById("P4Shield").innerHTML = "";
+        } else if (DoubleProtectedPlayer == "Player4") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "2x Shielded";
         }
+
     } else if (ProtectedPlayer != null) {
         if (ProtectedPlayer == "Player1") {
             document.getElementById("P1Shield").innerHTML = "Shielded";
             document.getElementById("P2Shield").innerHTML = "";
             document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "";
         } else if (ProtectedPlayer == "Player2") {
             document.getElementById("P1Shield").innerHTML = "";
             document.getElementById("P2Shield").innerHTML = "Shielded";
             document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "";
         } else if (ProtectedPlayer == "Player3") {
             document.getElementById("P1Shield").innerHTML = "";
             document.getElementById("P2Shield").innerHTML = "";
             document.getElementById("P3Shield").innerHTML = "Shielded";
+            document.getElementById("P4Shield").innerHTML = "";
+        } else if (DoubleProtectedPlayer == "Player4") {
+            document.getElementById("P1Shield").innerHTML = "";
+            document.getElementById("P2Shield").innerHTML = "";
+            document.getElementById("P3Shield").innerHTML = "";
+            document.getElementById("P4Shield").innerHTML = "2x Shielded";
         }
     } else {
         document.getElementById("P1Shield").innerHTML = "";
         document.getElementById("P2Shield").innerHTML = "";
         document.getElementById("P3Shield").innerHTML = "";
+        document.getElementById("P4Shield").innerHTML = "";
     }
-    
-
-    
 
 }
 
-
-function CycleActive() {
-    DamageHand = null;
-    Damage = 0;
-
-    if (ActivePlayer == "Player1") {
-        if ((P2LeftHealth.innerHTML != 0) || ((P2RightHealth.innerHTML != 0))) {
-            ActivePlayer = "Player2";
-        } else {
-            ActivePlayer = "Player3";
-        }
-
-    } else if (ActivePlayer == "Player2") {
-        if ((P3LeftHealth.innerHTML != 0) || ((P3RightHealth.innerHTML != 0))) {
-            ActivePlayer = "Player3";
-        } else {
-            ActivePlayer = "Player1";
-        }
-
-    } else if (ActivePlayer == "Player3") {
-        if ((P1LeftHealth.innerHTML != 0) || ((P1RightHealth.innerHTML != 0))) {
-            ActivePlayer = "Player1";
-        } else {
-            ActivePlayer = "Player2";
-        }
+function SetPlayersVisuals() {
+    if (PlayerList.includes("Player1")) {
+        document.getElementById("Player1").style.display = '';
+    } else {
+        document.getElementById("Player1").style.display = 'none';
     }
-
-    SetActive(ActivePlayer);
-    UpdateShield();
+    if (PlayerList.includes("Player2")) {
+        document.getElementById("Player2").style.display = '';
+    } else {
+        document.getElementById("Player2").style.display = 'none';
+    }
+    if (PlayerList.includes("Player3")) {
+        document.getElementById("Player3").style.display = '';
+    } else {
+        document.getElementById("Player3").style.display = 'none';
+    }
+    if (PlayerList.includes("Player4")) {
+        document.getElementById("Player4").style.display = '';
+    } else {
+        document.getElementById("Player4").style.display = 'none';
+    }
 }
+
+//-----------------------------------
+
+
 
 
 function GetPlayerParent(HandID) {
@@ -319,6 +457,8 @@ function GetPlayerParent(HandID) {
         outParent = "Player2";
     } else if (HandID[1] == '3') {
         outParent = "Player3";
+    } else if (HandID[1] == '4') {
+        outParent = "Player4";
     }
 
     return outParent;
@@ -339,7 +479,11 @@ function UpdateCurrentHands() {
     } else if (ActivePlayer=="Player3") {
         LeftHealth = parseInt(document.getElementById("P3LeftHealth").innerHTML);
         RightHealth = parseInt(document.getElementById("P3RightHealth").innerHTML);
+    } else if (ActivePlayer=="Player4") {
+        LeftHealth = parseInt(document.getElementById("P4LeftHealth").innerHTML);
+        RightHealth = parseInt(document.getElementById("P4RightHealth").innerHTML);
     }
+
 }
 
 
@@ -370,6 +514,8 @@ function DoDamage(VictimHandHealth) {
             document.getElementById("P2Power").innerHTML = P2Power + 1;
         } else if (GetPlayerParent(VictimHandHealth) == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power + 1;
+        } else if (GetPlayerParent(VictimHandHealth) == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power + 1;
         }
         
 
@@ -453,6 +599,8 @@ function OneCycleShieldPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 1;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 1;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 1;
         }
 
         ProtectedPlayer = ActivePlayer;
@@ -474,6 +622,8 @@ function TwoCycleShieldPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 2;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 2;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 2;
         }
 
         ProtectedPlayer = ActivePlayer;
@@ -496,6 +646,8 @@ function SkipPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 4;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 4;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 4;
         }
     
         CycleActive();
@@ -518,6 +670,8 @@ function LightningPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 3;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 3;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 3;
         }
 
 
@@ -530,6 +684,9 @@ function LightningPowerup() {
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3LeftHealth").innerHTML = parseInt(P3LeftHealth.innerHTML) + 2;
             document.getElementById("P3RightHealth").innerHTML = parseInt(P3RightHealth.innerHTML) + 2;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4LeftHealth").innerHTML = parseInt(P4LeftHealth.innerHTML) + 2;
+            document.getElementById("P4RightHealth").innerHTML = parseInt(P4RightHealth.innerHTML) + 2;
         }
 
         CycleActive();
@@ -549,6 +706,8 @@ function PoisonPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 5;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 5;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 5;
         }
 
 
@@ -560,6 +719,10 @@ function PoisonPowerup() {
 
         document.getElementById("P3LeftHealth").innerHTML = parseInt(P3LeftHealth.innerHTML) + 1;
         document.getElementById("P3RightHealth").innerHTML = parseInt(P3RightHealth.innerHTML) + 1;
+
+        document.getElementById("P4LeftHealth").innerHTML = parseInt(P4LeftHealth.innerHTML) + 1;
+        document.getElementById("P4RightHealth").innerHTML = parseInt(P4RightHealth.innerHTML) + 1;
+
 
         CycleActive();
         UpdateDead();
@@ -579,6 +742,8 @@ function HealPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 7;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 7;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 7;
         }
 
 
@@ -591,6 +756,9 @@ function HealPowerup() {
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3LeftHealth").innerHTML = parseInt(P3LeftHealth.innerHTML) - 1;
             document.getElementById("P3RightHealth").innerHTML = parseInt(P3RightHealth.innerHTML) - 1;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4LeftHealth").innerHTML = parseInt(P4LeftHealth.innerHTML) - 1;
+            document.getElementById("P4RightHealth").innerHTML = parseInt(P4RightHealth.innerHTML) - 1;
         }
 
         CycleActive();
@@ -611,6 +779,8 @@ function StrengthPowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 12;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 12;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 12;
         }
 
 
@@ -634,6 +804,8 @@ function NukePowerup() {
             document.getElementById("P2Power").innerHTML = P2Power - 15;
         } else if (ActivePlayer == "Player3") {
             document.getElementById("P3Power").innerHTML = P3Power - 15;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power - 15;
         }
 
 
@@ -662,6 +834,10 @@ function EdgePowerup() {
             document.getElementById("P3Power").innerHTML = P3Power + 1;
             document.getElementById("P3LeftHealth").innerHTML = 5;
             document.getElementById("P3RightHealth").innerHTML = 5;
+        } else if (ActivePlayer == "Player4") {
+            document.getElementById("P4Power").innerHTML = P4Power + 1;
+            document.getElementById("P4LeftHealth").innerHTML = 5;
+            document.getElementById("P4RightHealth").innerHTML = 5;
         }
     
         CycleActive();
